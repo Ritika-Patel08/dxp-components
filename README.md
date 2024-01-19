@@ -30,3 +30,64 @@ If you have any questions or ideas feel free to join our <a href="https://discor
 # The license
 
 DXP Components is completely free and released under the Apache v2.0 License. Check <a href="https://github.com/hotwax/dxp-components/blob/main/LICENSE" target="_blank">LICENSE</a> for more details.
+
+# Components
+## DxpImage 
+### Introduction
+<li> dxpImage component is designed to handle the loading and display of images.</li>
+<li> It provides functionality to efficiently manage different types of image sources, including local assets, external web URLs, and images from a resource server.</li>
+
+### Basic Usage 
+<li>TThe component dynamically loads and displays the specified image, considering different source scenarios, such as local assets, web URLs, or resource server images.</li>
+
+### Props
+#### 1. src
+<table>
+  <tr>
+    <th>Descrption</th>
+    <td>It's specifying that the component expects a prop named src.n this component props.src to access the value of the src.</td>
+  </tr>
+  <tr>
+    <th>Type</th>
+    <td>string</td>
+  </tr>
+  <tr>
+    <th>Required</th>
+    <td>False</td>
+  </tr>
+   <tr>
+    <th>Default value </th>
+    <td>‘context.defaultImgUrl’</td>
+  </tr>
+</table>
+
+## Technical Implementation
+#### 1. setImageUrl()
+The setImageUrl function is responsible for determining the appropriate image URL based on the provided props.src and the configured resourceUrl.
+<li>If props.src contains 'assets/', assigns directly to imageUrl for local assets.</li>
+<li>If props.src starts with 'http', checks image existence; if true, assigns to imageUrl for web URLs.</li>
+<li>If not local or web, assumes resource server image, appends to resourceUrl, and assigns if URL exists.</li>
+
+#### 2. checkIfImageExists()
+
+<li>Returns a Promise</li>
+<li>Resolves to true if the image loads successfully, rejects with false on error.</li>
+<li>Logs an error message to the console if the image doesn't exist</li>
+
+#### 2. onMounted()
+
+<li>onMounted() hook activates when the component is added to the DOM.</li>
+<li>It calls the setImageUrl function.</li>
+<li>During the initial rendering, it sets the image URL based on the logic within setImageUrl.</li>
+
+#### 2. onUpdated()
+
+<li>onUpdated() hook activates on component re-renders.</li>
+<li>Like onMounted, it calls setImageUrl.</li>
+<li>Ensures dynamic updating of the image URL based on changes in reactive dependencies during re-renders.</li>
+
+## Recommendation
+<li>Use the component to load and display images stored as local assets within the project directory.</li>
+<li>Employ the component to fetch and showcase images from external web URLs.</li>
+<li>Use the component to display images fetched from a resource server.</li>
+<li>Component's dynamic nature, allowing it to adapt different image sources based on the provided <b>props.src</b>. This is useful in scenarios where image sources can vary at runtime.</li>
